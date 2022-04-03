@@ -39,6 +39,9 @@ module.exports = (sequelize) =>{
         year: {
             type: Sequelize.INTEGER,
         }
-    })   
-
-}
+    }, {
+        sequelize
+    });
+        
+    return  Book;
+};

@@ -22,6 +22,24 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+
+
+//Setting up database
+
+const db = require('./db');
+const {Book} = db.models;
+const {Op} = db.Sequelize;
+
+( async ()=>{
+    await db.sequelize.sync({force:true});
+})();
+
+
+
+
+
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
