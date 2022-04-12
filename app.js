@@ -22,17 +22,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+const sequelize = require('./models').sequelize; // import Sequelize
 
 
-//Setting up database
-
-const db = require('./db');
-const {Book} = db.models;
-const {Op} = db.Sequelize;
-
-( async ()=>{
-    await db.sequelize.sync({force:true});
+//Test connection to the database and sync the model
+(async () =>{
+  await sequelize.sync();
+  try{
+      await sequelize.authenticate();
+      console.log('Connection has been established successfully.');
+  } catch(error) {
+    console.error('Unable to connect to the database:', error);
+  }
 })();
+
+
+
+
 
 
 
