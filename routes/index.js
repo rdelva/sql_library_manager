@@ -22,8 +22,9 @@ function asyncHandler(cb){
 /* GET listing of all the books. */
 router.get('/', asyncHandler(async (req, res) => {
   const books = await Book.findAll();
-  console.log(books.toJSON());
-  //res.render("index", { Books, title: "Sequelize-It!" });
+  console.log(books);
+  //console.log(books.map(book => book.toJSON()) );
+  res.render("index", { Books, title: "Sequelize-It!" });
 }));
 
 
