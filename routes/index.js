@@ -24,7 +24,7 @@ router.get('/', asyncHandler(async (req, res) => {
   const books = await Book.findAll();
   console.log(books);
   //console.log(books.map(book => book.toJSON()) );
-  res.render("index", { Books, title: "Sequelize-It!" });
+  res.render("index", { books, title: "Books" });
 }));
 
 
