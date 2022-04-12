@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const Book = require('../models').Book;
 
 /* GET home page. */
 // router.get('/', function(req, res, next) {
@@ -18,10 +19,10 @@ function asyncHandler(cb){
   }
 }
 
-/* GET All the books listing. */
+/* GET listing of all the books. */
 router.get('/', asyncHandler(async (req, res) => {
-  const books = await Books.findAll();
-  console.log(books);
+  const books = await Book.findAll();
+  console.log(books.toJSON());
   //res.render("index", { Books, title: "Sequelize-It!" });
 }));
 
