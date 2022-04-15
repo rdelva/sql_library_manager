@@ -19,12 +19,21 @@ function asyncHandler(cb){
   }
 }
 
+//Test the Book model and communication with the database
+
+router.get('/', asyncHandler(async (req, res) => {
+  const books = await Book.findAll();
+  res.json(books);
+}));
+
+
 /* GET listing of all the books. */
 router.get('/', asyncHandler(async (req, res) => {
   const books = await Book.findAll();
+  //res.json(books);
   //console.log(books);
-  console.log(books.map(book => book.toJSON()) );
-  res.render("index", { books, title: "Books" });
+  //console.log(books.map(book => book.toJSON()) );
+  //res.render("index", { books, title: "Books" });
 }));
 
 
