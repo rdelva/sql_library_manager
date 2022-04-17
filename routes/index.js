@@ -54,9 +54,6 @@ router.use((req, res, next)=>{
 });
 
 
-
-//Middleware
-
 router.use((err, req, res, next) => {
   res.locals.error = err;
   if(err.status === 404){
