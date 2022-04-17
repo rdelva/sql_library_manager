@@ -1,4 +1,5 @@
 var express = require('express');
+const app = require('../app');
 var router = express.Router();
 const Book = require('../models').Book;
 
@@ -36,7 +37,34 @@ router.get('/', asyncHandler(async (req, res) => {
   //res.render("index", { books, title: "Books" });
 }));
 
+//Error Handlers
+router.use((req, res, next)=>{
+  const err = new Error('Page Not Found');
+  err.message = 'Sorry! We couldn\'t find the page you were looking for.';
+  err.status = 404;
+  next(err);
+});
+
+//Error Handlers
+router.use((req, res, next)=>{
+  const err = new Error('Server Error');
+  err.message = 'Sorry! There was an unexpected error on the server.';
+  err.status = 500;
+  next(err);
+});
 
 
+
+//Middleware
+
+router.use((err, req, res, next) => {
+  res.locals.error = err;
+  if(err.status === 404){
+    res.render('page-not-found', {err});
+  } else {
+    res.render('error', {err});
+  }
+
+});
 
 module.exports = router;
