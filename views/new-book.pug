@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1= title
+  button Create New Book
+  table 
+    tr
+      td Title
+      td Author
+      td Genre
+      td Year
+    
+    each book in books  
+      tr
+        td= book.title
+        td= book.author
+        td= book.genre 
+        td= book.year
+

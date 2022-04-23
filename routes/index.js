@@ -40,16 +40,25 @@ function asyncHandler(cb){
 // Home Route - redirect to books
 router.get('/', asyncHandler(async (req, res) => {
   res.redirect('/books');
- 
-
 }));
 
+//Shows the full list of books
 router.get('/books', asyncHandler(async (req, res) => {
   const books = await Book.findAll();
   res.render('index', { books, title: "Books" });
-
 }));
 
+
+//Shows the Create New Book Form
+router.get('/books/new', asyncHandler(async (req, res) => {
+  const books = await Book.findAll();
+  res.render('new-book', { books, title: "New Book" });
+}));
+
+router.post('/books/new', asyncHandler(async (req, res) => {
+  const books = await Book.findAll();
+  res.render('new-book', { books, title: "New Book" });
+}));
 
 
 
