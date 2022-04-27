@@ -51,13 +51,15 @@ router.get('/books', asyncHandler(async (req, res) => {
 
 //Shows the Create New Book Form
 router.get('/books/new', asyncHandler(async (req, res) => {
-  const books = await Book.findAll();
   res.render('new-book', { books, title: "New Book" });
 }));
 
+// Posts a new book to the database
 router.post('/books/new', asyncHandler(async (req, res) => {
-  const books = await Book.findAll();
-  res.render('new-book', { books, title: "New Book" });
+  res.redirect("index");
+  const book = await Book.create(res.body);
+  console.log(book);
+  //res.render('new-book', { books, title: "New Book" });
 }));
 
 
