@@ -1,19 +1,24 @@
 extends layout
 
 block content
-  h1= title
-  button Create New Book
-  table 
-    tr
-      td Title
-      td Author
-      td Genre
-      td Year
-    
-    each book in books  
-      tr
-        td= book.title
-        td= book.author
-        td= book.genre 
-        td= book.year
 
+h1 New Book
+
+form
+  p
+    label(for="title") Title
+    input(name="title" type="text" id="title")
+  p
+    label(for="author") Author
+    input(name="author" type="text" id="author")
+  p
+    label(for="genre") Genre
+    input(name="genre" type="text" id="genre")
+  p
+    label(for="year") Author
+    input(name="year" type="text" id="year")
+  p
+    input(type="submit" value="Create New Book")
+
+  p
+    a(class="button")Cancel 
