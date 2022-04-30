@@ -4,19 +4,19 @@ block content
 
     h1=title
 
-    form
+    form(action="/books", method="post")
       p
         label(for="title") Title
-        input(name="title" type="text" id="title")
+        input(name="title" type="text" id="title" value=book.title)
       p
         label(for="author") Author
-        input(name="author" type="text" id="author")
+        input(name="author" type="text" id="author" value=book.author)
       p
         label(for="genre") Genre
-        input(name="genre" type="text" id="genre")
+        input(name="genre" type="text" id="genre" value=book.genre)
       p
-        label(for="year") Author
-        input(name="year" type="text" id="year")
+        label(for="year") Year
+        input(name="year" type="text" id="year" value=book.year)
       p
         input(type="submit" value="Create New Book")
 
