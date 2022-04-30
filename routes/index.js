@@ -57,8 +57,9 @@ router.get('/books/new', asyncHandler(async (req, res) => {
 // Posts a new book to the database
 router.post('/books/new', asyncHandler(async (req, res) => {
   res.redirect("index");
-  const book = await Book.create(res.body);
-  console.log(book);
+  const book = await Book.create(req.body);
+  res.redirect('/books');
+  //console.log(book);
   //res.render('new-book', { books, title: "New Book" });
 }));
 
