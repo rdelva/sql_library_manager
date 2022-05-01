@@ -42,6 +42,7 @@ router.get('/', asyncHandler(async (req, res) => {
   res.redirect('/books');
 }));
 
+
 //Shows the full list of books
 router.get('/books', asyncHandler(async (req, res) => {
   const books = await Book.findAll();
@@ -56,13 +57,21 @@ router.get('/books/new', asyncHandler(async (req, res) => {
 
 // Posts a new book to the database
 router.post('/books/new', asyncHandler(async (req, res) => {
-  res.redirect("index");
-  const book = await Book.create(req.body);
-  res.redirect('/books');
-  //console.log(book);
-  //res.render('new-book', { books, title: "New Book" });
+  const book = await Book.create(req.body);  
+  res.redirect("/books");
+ 
 }));
 
+
+
+// router.get("/:id", asyncHandler(async (req, res) => {
+//   const book = await Book.findByPk(req.params.id);
+//   if(book) {
+//     res.render("books/show", { book, title: book.title });  
+//   } else {
+//     res.sendStatus(404);
+//   }
+// }));
 
 
 
