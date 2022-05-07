@@ -85,16 +85,16 @@ router.get("/book-details/:id", asyncHandler(async (req, res) => {
   }
 }));
 
-// //Shows book detail form
+//Shows book detail form
 
-// router.post("book-details/:id", asyncHandler(async (req, res) => {
-//   const book = await Book.findByPk(req.params.id);
-//   if(book) {
-//     res.render("book-details", { book, title: book.title });  
-//   } else {
-//     res.sendStatus(404);
-//   }
-// }));
+router.post("/book-details/edit/:id", asyncHandler(async (req, res) => {
+  const book = await Book.findByPk(req.params.id);
+  if(book) {
+    res.render("edit", { book, title: book.title });  
+  } else {
+    res.sendStatus(404);
+  }
+}));
 
 
 //Error Handlers

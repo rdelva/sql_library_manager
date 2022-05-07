@@ -3,8 +3,7 @@ extends layout
 block content
 
     h1=title
-
-    
+  
       p
         label(for="title") Title
         =book.title
@@ -17,4 +16,6 @@ block content
       p
         label(for="year") Year
         =book.year
+
+      a.button(href="/book-details/edit/"+ book.id) Edit Book
 
