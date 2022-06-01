@@ -21,4 +21,7 @@ block content
         input(type="submit" value="Update Book Info")
 
       p
-        a.button Cancel 
+        a.button(href="/book-details/" + book.id) Cancel 
+
+      p 
+        a.button(href="book-details/" + book.id + "/delete") Delete Book

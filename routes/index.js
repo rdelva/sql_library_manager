@@ -85,27 +85,42 @@ router.get("/book-details/:id", asyncHandler(async (req, res) => {
   }
 }));
 
-//Shows book detail form
 
+//EUpdate/Edit
 router.get("/book-details/edit/:id", asyncHandler(async (req, res) => {
   const book = await Book.findByPk(req.params.id);
   if(book) {
-    res.render("edit", { book, title: book.title });  
+    res.render("edit", { book, title: book.title });   
+
   } else {
     res.sendStatus(404);
   }
 }));
 
+//Update/Edit book
 
 router.post("/book-details/edit/:id", asyncHandler(async (req, res) => {
-  const book = await Book.findByPk(req.params.id);
-  if(book) {
-    res.render("edit", { book, title: book.title });  
-  } else {
-    res.sendStatus(404);
+  let book;
+  try {
+      book = await Books.findByPk(req.params.id);
+      console.log(book);
+      if(book){
+        await book.update(req.body);
+        res.redirect("/book-details" + book.id);
+      } else {
+        res.sendStatus(404);
+      }
+  } catch(error) {
+    if(error.name === "SequelizeValidationError") {
+      book = await Book.build(req.body);
+      book.id = req.params.id; // make sure correct article gets updated
+      res.render("book-details/edit/:id", { book, errors: error.errors, title: "Update Book" })
+    } else {
+      throw error;
+    }
   }
+    
 }));
-
 
 
 
