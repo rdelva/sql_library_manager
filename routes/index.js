@@ -122,6 +122,41 @@ router.post("/book-details/edit/:id", asyncHandler(async (req, res) => {
     
 }));
 
+//Delete Book
+router.get("/book-details/:id/delete", asyncHandler(async (req, res) => {
+  const book = await Book.findByPk(req.params.id);
+  if(book) {
+    res.render("delete", { book, title: book.title });   
+
+  } else {
+    res.sendStatus(404);
+  }
+}));
+
+
+//Delete Book
+router.post("/book-details/:id/delete", asyncHandler(async (req, res) => {
+  let book;
+  try {
+      book = await Books.findByPk(req.params.id);
+      console.log(book);
+      if(book){
+        await book.destroy();
+        res.redirect("/book-details");
+      } else {
+        res.sendStatus(404);
+      }
+  } catch(error) {
+    if(error.name === "SequelizeValidationError") {
+      book = await Book.build(req.body);
+      book.id = req.params.id; // make sure correct article gets updated
+      res.render("book-details/:id/delete", { book, errors: error.errors, title: "Delete Book" })
+    } else {
+      throw error;
+    }
+  }
+    
+}));
 
 
 //Error Handlers
