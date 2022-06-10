@@ -123,7 +123,7 @@ router.post("/book-details/edit/:id", asyncHandler(async (req, res) => {
 }));
 
 //Delete Book
-router.get("/book-details/:id/delete", asyncHandler(async (req, res) => {
+router.get("/books/:id/delete", asyncHandler(async (req, res) => {
   const book = await Book.findByPk(req.params.id);
   if(book) {
     res.render("delete", { book, title: book.title });   
@@ -135,14 +135,15 @@ router.get("/book-details/:id/delete", asyncHandler(async (req, res) => {
 
 
 //Delete Book
-router.post("/book-details/:id/delete", asyncHandler(async (req, res) => {
-  let book;
+router.post("/books/:id/delete", asyncHandler(async (req, res) => {
+  //let book;
   try {
-      book = await Books.findByPk(req.params.id);
+      let book = await Book.findByPk(req.params.id);
+      console.log("Hi");
       console.log(book);
       if(book){
         await book.destroy();
-        res.redirect("/book-details");
+        res.redirect("/");
       } else {
         res.sendStatus(404);
       }
