@@ -45,9 +45,26 @@ router.get('/', asyncHandler(async (req, res) => {
 
 //Shows the full list of books
 router.get('/books', asyncHandler(async (req, res) => {
-  const books = await Book.findAll();
+  const books = await Book.findAll({ limit: 5 });
+  res.render('index', { books, title: "Books" });
+
+}));
+
+
+//Go to Next Page
+//Shows the full list of books
+router.get('/books/:page', asyncHandler(async (req, res) => {
+  const pageNumber = req.params.page
+  const books = await Book.findAll({ offset: 5, limit: 5});
   res.render('index', { books, title: "Books" });
 }));
+
+// //Go to Next Page
+// //Shows the full list of books
+// router.post('/books/next-5', asyncHandler(async (req, res) => {
+//   const books = await Book.findAll({ offset: 5, limit: 5});
+//   res.render('index', { books, title: "Books" });
+// }));
 
 
 //Shows the Create New Book Form
