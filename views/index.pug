@@ -2,8 +2,13 @@ extends layout
 
 block content
   h1= title
-  p
-    a.button(href="/books/new") Create New Book
+  div
+    span
+      a.button(href="/books/new") Create New Book
+
+    span
+      input.search(type="text")
+      a.button(type="submit" id="search" ) Search
   table
       thead 
           tr
@@ -20,3 +25,6 @@ block content
             td= book.genre 
             td= book.year
 
+
+  p
+    a.button(href="/books/next-5")  Next 5
