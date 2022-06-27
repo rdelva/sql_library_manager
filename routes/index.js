@@ -45,10 +45,27 @@ router.get('/', asyncHandler(async (req, res) => {
 
 //Shows the full list of books
 router.get('/books', asyncHandler(async (req, res) => {
+ 
+
+  const searchButton = document.getElementById("search");
+  const bookSearch = document.getElementById("bookSearch");
+
+  searchButton.addEventListener((e) => {
+
+    
+    console.log(bookSearch.value);
+    console.log("Hi");
+
+
+
+  });
+  
   const books = await Book.findAll({ limit: 5 });
   res.render('index', { books, title: "Books" });
 
 }));
+
+
 
 
 //Go to Next Page

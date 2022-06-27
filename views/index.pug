@@ -2,12 +2,14 @@ extends layout
 
 block content
   h1= title
+  
   div
     span
       a.button(href="/books/new") Create New Book
 
+    
     span
-      input.search(type="text")
+      input.search(type="text" id="bookSearch")
       a.button(type="submit" id="search" ) Search
   table
       thead 
