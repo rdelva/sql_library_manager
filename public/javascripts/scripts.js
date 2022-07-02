@@ -1,11 +1,15 @@
+console.log("hi");
+
 const  searchBar = () => {
   const searchButton = document.getElementById("search");
   const bookSearch = document.getElementById("bookSearch");
 
-  searchButton.addEventListener((e) => {
+  searchButton.addEventListener('click', (e) => {
+    
    
-    console.log(bookSearch.value);
-    console.log("Hi");
   });
 
 } 
+
+
+searchBar();

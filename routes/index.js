@@ -45,26 +45,20 @@ router.get('/', asyncHandler(async (req, res) => {
 
 //Shows the full list of books
 router.get('/books', asyncHandler(async (req, res) => {
- 
-
-  const searchButton = document.getElementById("search");
-  const bookSearch = document.getElementById("bookSearch");
-
-  searchButton.addEventListener((e) => {
-
-    
-    console.log(bookSearch.value);
-    console.log("Hi");
-
-
-
-  });
-  
+   
   const books = await Book.findAll({ limit: 5 });
   res.render('index', { books, title: "Books" });
 
 }));
 
+
+//Shows the full list of books
+router.post('/books', asyncHandler(async (req, res) => {
+  console.log(req.params);
+  const books = await Book.findAll({ limit: 5 });
+  res.render('index', { books, title: "Books" });
+
+}));
 
 
 
@@ -88,6 +82,34 @@ router.get('/books/:page', asyncHandler(async (req, res) => {
 router.get('/books/new', asyncHandler(async (req, res) => {
   res.render('new-book', { title: "New Book" });
 }));
+
+//Search Data
+
+
+// router.post("/book-details/search", asyncHandler(async (req, res) => {
+
+  
+//   console.log(req.params.id);
+//   // try {
+//   //     book = await Books.findByPk(req.params.id);
+//   //     console.log(book);
+//   //     if(book){
+//   //       await book.update(req.body);
+//   //       res.redirect("/book-details" + book.id);
+//   //     } else {
+//   //       res.sendStatus(404);
+//   //     }
+//   // } catch(error) {
+//   //   if(error.name === "SequelizeValidationError") {
+//   //     book = await Book.build(req.body);
+//   //     book.id = req.params.id; // make sure correct article gets updated
+//   //     res.render("book-details/edit/:id", { book, errors: error.errors, title: "Update Book" })
+//   //   } else {
+//   //     throw error;
+//   //   }
+//   // }
+    
+// }));
 
 // Posts a new book to the database
 router.post('/books/new', asyncHandler(async (req, res) => {

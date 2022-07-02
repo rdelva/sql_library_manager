@@ -8,9 +8,10 @@ block content
       a.button(href="/books/new") Create New Book
 
     
-    span
-      input.search(type="text" id="bookSearch")
-      a.button(type="submit" id="search" ) Search
+    form(action="/books"  method="post")
+      span
+        input.search(type="text" id="bookSearch")
+        input(type="submit" id="search"  value="Search")
   table
       thead 
           tr
