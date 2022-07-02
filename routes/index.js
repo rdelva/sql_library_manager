@@ -45,6 +45,8 @@ router.get('/', asyncHandler(async (req, res) => {
 
 //Shows the full list of books
 router.get('/books', asyncHandler(async (req, res) => {
+
+  
    
   const books = await Book.findAll({ limit: 5 });
   res.render('index', { books, title: "Books" });
@@ -54,7 +56,7 @@ router.get('/books', asyncHandler(async (req, res) => {
 
 //Shows the full list of books
 router.post('/books', asyncHandler(async (req, res) => {
-  console.log(req.params);
+  console.log(req.body.query);
   const books = await Book.findAll({ limit: 5 });
   res.render('index', { books, title: "Books" });
 

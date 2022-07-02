@@ -10,7 +10,7 @@ block content
     
     form(action="/books"  method="post")
       span
-        input.search(type="text" id="bookSearch")
+        input.search(type="text" id="bookSearch" name="query" )
         input(type="submit" id="search"  value="Search")
   table
       thead 
