@@ -2,6 +2,7 @@ var express = require('express');
 const app = require('../app');
 var router = express.Router();
 const Book = require('../models').Book;
+const { Op } = require('sequelize');
 
 /* GET home page. */
 // router.get('/', function(req, res, next) {
@@ -45,8 +46,6 @@ router.get('/', asyncHandler(async (req, res) => {
 
 //Shows the full list of books
 router.get('/books', asyncHandler(async (req, res) => {
-
-  
    
   const books = await Book.findAll({ limit: 5 });
   res.render('index', { books, title: "Books" });
@@ -56,8 +55,28 @@ router.get('/books', asyncHandler(async (req, res) => {
 
 //Shows the full list of books
 router.post('/books', asyncHandler(async (req, res) => {
-  console.log(req.body.query);
-  const books = await Book.findAll({ limit: 5 });
+  const searchQuery = req.body.query;
+  const books = await Book.findAll({ 
+    where: {
+      [Op.or]: 
+        { 
+          title: {
+            [Op.like]:`%${searchQuery}%`
+          },
+          author: {
+            [Op.like]: `%${searchQuery}%`
+          },
+          genre: {
+            [Op.like]: `%${searchQuery}%`
+          },
+          year: {
+            [Op.like]: `%${searchQuery}%`
+          },
+
+        }
+               
+    }// end of where clause
+   });
   res.render('index', { books, title: "Books" });
 
 }));
