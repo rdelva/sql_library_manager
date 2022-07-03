@@ -54,15 +54,18 @@ router.get('/books', asyncHandler(async (req, res) => {
   //console.log(count);
 
   console.log(req.params);
-  const page = req.query.page;
-  const limit = req.query.limit;
+  //const page = req.query.page;
+  //const limit = req.query.limit;
 
-  const startIndex =  page - 1  * limit;
-  const endIndex = page * limit; 
+  const page = Math.floor(count / 5);
   console.log(page);
-  console.log(limit);
 
-  res.render('index', { books, title: "Books" });
+  // // const startIndex =  page - 1  * limit;
+  // // const endIndex = page * limit; 
+  // console.log(page);
+  // console.log(limit);
+
+  res.render('index', { books, title: "Books", page });
 
 }));
 
