@@ -46,8 +46,22 @@ router.get('/', asyncHandler(async (req, res) => {
 
 //Shows the full list of books
 router.get('/books', asyncHandler(async (req, res) => {
-   
-  const books = await Book.findAll({ limit: 5 });
+
+  const {count, rows } = await Book.findAndCountAll();
+
+  const books = await Book.findAll({ limit: 5, offset:0 });
+
+  //console.log(count);
+
+  console.log(req.params);
+  const page = req.query.page;
+  const limit = req.query.limit;
+
+  const startIndex =  page - 1  * limit;
+  const endIndex = page * limit; 
+  console.log(page);
+  console.log(limit);
+
   res.render('index', { books, title: "Books" });
 
 }));
@@ -72,11 +86,11 @@ router.post('/books', asyncHandler(async (req, res) => {
           year: {
             [Op.like]: `%${searchQuery}%`
           },
-
-        }
-               
+        }        
     }// end of where clause
    });
+
+
   res.render('index', { books, title: "Books" });
 
 }));
