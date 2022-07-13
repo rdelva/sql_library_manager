@@ -34,6 +34,5 @@ block content
 
 
   div
-   -let i = 1
-    while  i <= page
-      div=i++  
+    -for (var i = 1; i <= page; i++  )
+     a(href="/books?page=" + i ) #{i} 

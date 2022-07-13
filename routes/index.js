@@ -47,25 +47,24 @@ router.get('/', asyncHandler(async (req, res) => {
 //Shows the full list of books
 router.get('/books', asyncHandler(async (req, res) => {
 
-  const {count, rows } = await Book.findAndCountAll();
+  //http://localhost:3000/books?page=1&limit=5
 
-  const books = await Book.findAll({ limit: 5, offset:0 });
+  const {count, rows } = await Book.findAndCountAll(); // gets the total number of books in the db
+  const limitNumber = 5; // number of items per page
+  
+  const page = Math.floor(count / limitNumber); // creates the pages on the bottom of the screen (number of rows / how many items per page)
+  const pageNumber = req.query.page; // Page Number user selected
 
-  //console.log(count);
 
-  console.log(req.params);
-  //const page = req.query.page;
-  //const limit = req.query.limit;
+  if(pageNumber < limitNumber) {
+    const books = await Book.findAll({ limit: 5, offset: (pageNumber * limitNumber) });
+    res.render('index', { books, title: "Books", page });
+  } else {
+    const books = await Book.findAll({ limit: 5, offset: limitNumber });
+    res.render('index', { books, title: "Books", page });
 
-  const page = Math.floor(count / 5);
-  console.log(page);
-
-  // // const startIndex =  page - 1  * limit;
-  // // const endIndex = page * limit; 
-  // console.log(page);
-  // console.log(limit);
-
-  res.render('index', { books, title: "Books", page });
+  }
+  
 
 }));
 
@@ -101,12 +100,13 @@ router.post('/books', asyncHandler(async (req, res) => {
 
 
 //Go to Next Page
-//Shows the full list of books
-router.get('/books/:page', asyncHandler(async (req, res) => {
-  const pageNumber = req.params.page
-  const books = await Book.findAll({ offset: 5, limit: 5});
-  res.render('index', { books, title: "Books" });
-}));
+// //Shows the full list of books
+// router.get('/books?page', asyncHandler(async (req, res) => {
+//   const pageNumber = req.query
+//   console.log(pageNumber);
+//   const books = await Book.findAll({ offset: 5, limit: 5});
+//   res.render('index', { books, title: "Books" });
+// }));
 
 // //Go to Next Page
 // //Shows the full list of books
