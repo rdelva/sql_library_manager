@@ -56,7 +56,10 @@ router.get('/books', asyncHandler(async (req, res) => {
   const pageNumber = req.query.page; // Page Number user selected
 
 
-  if(pageNumber < limitNumber) {
+
+
+  //Pagination
+  if(pageNumber < limitNumber ) {
     const books = await Book.findAll({ limit: 5, offset: (pageNumber * limitNumber) });
     res.render('index', { books, title: "Books", page });
   } else {
@@ -180,7 +183,7 @@ router.get("/book-details/:id", asyncHandler(async (req, res) => {
 }));
 
 
-//EUpdate/Edit
+//Update/Edit
 router.get("/book-details/edit/:id", asyncHandler(async (req, res) => {
   const book = await Book.findByPk(req.params.id);
   if(book) {

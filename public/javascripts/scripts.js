@@ -1,16 +1,20 @@
-// console.log("hi");
+const nextButton = () => {
+    
+    const nextBtn = document.getElementById("next"); 
+    let btnClicked = false;
+    let btnCounter = 1;
 
-// const  searchBar = () => {
-//   const searchButton = document.getElementById("search");
-//   const bookSearch = document.getElementById("bookSearch");
+    nextBtn.addEventListener('click', (e) =>{
+        e.preventDefault();
+        btnClicked = true;
 
-//   searchButton.addEventListener('click', (e) => {
-//     console.log(bookSearch.value);
-//     req.params.bookSearch += bookSearch.value;
-   
-//   });
+        if(btnClicked){
+            btnCounter++;
+        }
+       // console.log(btnCounter);       
+        return btnCounter;  
+    });
 
-// } 
+} 
 
-
-// searchBar();
+nextButton();
