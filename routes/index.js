@@ -29,15 +29,6 @@ function asyncHandler(cb){
 // }));
 
 
-/* GET listing of all the books. */
-//  router.get('/', asyncHandler(async (req, res) => {
-//    const books = await Book.findAll();
-//    res.json(books);
-//   console.log(books);
-//    console.log(books.map(book => book.toJSON()) );
-//    res.render("index", { books, title: "Books" });
-//  }));
-
 // Home Route - redirect to books
 router.get('/', asyncHandler(async (req, res) => {
   res.redirect('/books');
