@@ -3,13 +3,12 @@ extends layout
 block content
   h1= title
   
-  div
+  div.header
     span
       a.button(href="/books/new") Create New Book
-
     
     form(action="/books"  method="post")
-      span
+      div.form__input--flex
         input.search(type="text" id="bookSearch" name="query" )
         input(type="submit" id="search"  value="Search")
   table
@@ -27,6 +26,10 @@ block content
             td= book.author
             td= book.genre 
             td= book.year
+
+
+  //p
+   // a.button(href="/books" id="next")  Next 5
 
 
   div

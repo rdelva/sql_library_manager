@@ -1,3 +1,13 @@
+/* Additonal Styling*/
+
+* {
+	box-sizing: border-box;
+}
+
+/* Additional Styling */
+
+
+
 body {
   padding: 10px 50px 50px;
   font: 18px "Garamond", serif;
@@ -94,4 +104,24 @@ input[type=text] {
 
 .error {
   color: rgb(236, 15, 15);
+}
+
+/* Additional Styles */
+
+.header {
+  border-box:
+ display:flex;
+ flex-direction: row; 
+ text-align: top;
+}
+
+.form__input--flex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+ 
+}
+
+.form__input--flex  input[type=submit] {
+  margin: 0;
 }
