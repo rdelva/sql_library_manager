@@ -115,33 +115,7 @@ router.get('/books/new', asyncHandler(async (req, res) => {
   res.render('new-book', { title: "New Book" });
 }));
 
-//Search Data
 
-
-// router.post("/book-details/search", asyncHandler(async (req, res) => {
-
-  
-//   console.log(req.params.id);
-//   // try {
-//   //     book = await Books.findByPk(req.params.id);
-//   //     console.log(book);
-//   //     if(book){
-//   //       await book.update(req.body);
-//   //       res.redirect("/book-details" + book.id);
-//   //     } else {
-//   //       res.sendStatus(404);
-//   //     }
-//   // } catch(error) {
-//   //   if(error.name === "SequelizeValidationError") {
-//   //     book = await Book.build(req.body);
-//   //     book.id = req.params.id; // make sure correct article gets updated
-//   //     res.render("book-details/edit/:id", { book, errors: error.errors, title: "Update Book" })
-//   //   } else {
-//   //     throw error;
-//   //   }
-//   // }
-    
-// }));
 
 // Posts a new book to the database
 router.post('/books/new', asyncHandler(async (req, res) => {
@@ -153,6 +127,7 @@ router.post('/books/new', asyncHandler(async (req, res) => {
   } catch(error) {
       if(error.name === "SequelizeValidationError") { // checking the error
         article = await Books.build(req.body);
+        console.log(article);
         res.render("books/new", { books, errors: error.errors, title: "New Book" })
       } else {
         throw error; // error caught in the asyncHandler's catch block
@@ -269,7 +244,8 @@ router.use((err, req, res, next) => {
   res.locals.error = err;
   if(err.status === 404){
     res.render('page-not-found', {err});
-  } else {
+  }
+   else {
     res.render('error', {err});
   }
 
