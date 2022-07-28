@@ -109,7 +109,7 @@ input[type=text] {
 /* Additional Styles */
 
 .header {
-  border-box:
+  
  display:flex;
  flex-direction: row; 
  text-align: top;
