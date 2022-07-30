@@ -93,21 +93,6 @@ router.post('/books', asyncHandler(async (req, res) => {
 
 
 
-//Go to Next Page
-// //Shows the full list of books
-// router.get('/books?page', asyncHandler(async (req, res) => {
-//   const pageNumber = req.query
-//   console.log(pageNumber);
-//   const books = await Book.findAll({ offset: 5, limit: 5});
-//   res.render('index', { books, title: "Books" });
-// }));
-
-// //Go to Next Page
-// //Shows the full list of books
-// router.post('/books/next-5', asyncHandler(async (req, res) => {
-//   const books = await Book.findAll({ offset: 5, limit: 5});
-//   res.render('index', { books, title: "Books" });
-// }));
 
 
 //Shows the Create New Book Form
@@ -139,14 +124,43 @@ router.post('/books/new', asyncHandler(async (req, res) => {
 
 //Shows book detail form
 
-router.get("/book-details/:id", asyncHandler(async (req, res) => {
-  const book = await Book.findByPk(req.params.id);
+router.get("/book-details/:id", asyncHandler(async (req, res,next) => {
+  let book = await Book.findByPk(req.params.id);
   console.log(book);
   if(book) {
     res.render("book-details", { book, title: book.title });  
   } else {
-    res.sendStatus(404);
+      const err = new Error(`Book  Does Not Exist`);
+      err.status = 404
+      next(err)
+    
+    // res.sendStatus(404);
+    // 
   }
+
+  // let book;
+  // try{
+  //     book = await Book.findByPk(req.params.id);
+  //     if(book) {
+  //       res.render("book-details", { book, title: book.title });  
+  //     } else {
+  //       res.sendStatus(404);
+  //     }
+
+  // } catch(error) {
+  //   if(error.name === "SequelizeValidationError") { // checking the error
+       
+  //     res.render("book-details", { book, errors: error.errors})
+  //   } else {
+  //     throw error; // error caught in the asyncHandler's catch block
+  //   } 
+
+  // }
+
+
+
+
+
 }));
 
 
@@ -175,9 +189,9 @@ router.post("/book-details/edit/:id", asyncHandler(async (req, res) => {
       }
   } catch(error) {
     if(error.name === "SequelizeValidationError") {
-      book = await Book.findByPk(req.params.id);
+      //book = await Book.findByPk(req.params.id);
 
-      //book = await Book.build(req.body);
+      book = await Book.build(req.body);
       console.log(book);
       book.id = req.params.id; // make sure correct article gets updated
       res.render("edit", { book, errors: error.errors, title: "Update Book" })
@@ -205,8 +219,6 @@ router.post("/books/:id/delete", asyncHandler(async (req, res) => {
   //let book;
   try {
       let book = await Book.findByPk(req.params.id);
-      console.log("Hi");
-      console.log(book);
       if(book){
         await book.destroy();
         res.redirect("/");
@@ -227,12 +239,12 @@ router.post("/books/:id/delete", asyncHandler(async (req, res) => {
 
 
 //Error Handlers
-router.use((req, res, next)=>{
-  const err = new Error('Page Not Found');
-  err.message = 'Sorry! We couldn\'t find the page you were looking for.';
-  err.status = 404;
-  next(err);
-});
+// router.use((req, res, next)=>{
+//   const err = new Error('Page Not Found');
+//   err.message = 'Sorry! We couldn\'t find the page you were looking for.';
+//   err.status = 404;
+//   next(err);
+// });
 
 //Error Handlers
 router.use((req, res, next)=>{

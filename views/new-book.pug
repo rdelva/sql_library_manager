@@ -5,7 +5,7 @@ block content
     h1=title
     
     include includes/validation.pug
-    
+
     form(action="/books/new" method="post")
       p
         label(for="title") Title
@@ -23,4 +23,4 @@ block content
         input(type="submit" value="Create New Book")
 
       p
-        a.button Cancel 
+        a.button(href="/") Cancel 
