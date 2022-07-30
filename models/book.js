@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
           msg:"Please enter the title"
         },
         notEmpty: {
-          msg: "Please enter the author" 
+          msg: "Please enter the title" 
         },  
       },
     },

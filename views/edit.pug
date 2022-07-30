@@ -4,7 +4,10 @@ block content
 
     h1=title
 
-    form(action="/books/new" method="post")
+        include includes/validation.pug
+
+
+    form(action="/book-details/edit/"+ book.id,  method="post")
       p
         label(for="title") Title
         input(name="title" type="text" id="title" value=book.title )
