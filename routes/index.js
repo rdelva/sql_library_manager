@@ -43,7 +43,7 @@ router.get('/books', asyncHandler(async (req, res) => {
   const {count, rows } = await Book.findAndCountAll(); // gets the total number of books in the db
   const limitNumber = 5; // number of items per page
   
-  const page = Math.floor(count / limitNumber) - 1; // creates the pages on the bottom of the screen (number of rows / how many items per page)
+  const page = Math.floor(count / limitNumber); // creates the pages on the bottom of the screen (number of rows / how many items per page)
   const pageNumber = req.query.page; // Page Number user selected
 
 

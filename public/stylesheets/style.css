@@ -106,13 +106,16 @@ input[type=text] {
   color: rgb(236, 15, 15);
 }
 
-/* Additional Styling */
+/* Additional Styles */
 
+.container {
+  width:75%;
+}
 .header {
-  
  display:flex;
  flex-direction: row; 
- text-align: top;
+ justify-content: space-between;
+ 
 }
 
 .form__input--flex {
@@ -146,5 +149,6 @@ input[type=text] {
 }
 
 table {
-  margin:20px 0 20px 0;
+  margin:20px 0 20px;;
+  width:100%;
 }
