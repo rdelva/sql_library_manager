@@ -2,4 +2,8 @@ extends layout
 
 block content
   h1 Book Not Found
+  p= err.status
   p= error.message
+
+  p 
+    a.button(href="/") Home

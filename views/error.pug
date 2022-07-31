@@ -1,2 +1,10 @@
-h1 Server Error
-  p= error.message
+extends layout
+
+block content
+
+  h1 Server Error
+    p= error.status
+    p= error.message
+
+  p 
+    a.button(href="/") Home

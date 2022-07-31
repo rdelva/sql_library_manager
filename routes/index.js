@@ -43,7 +43,7 @@ router.get('/books', asyncHandler(async (req, res) => {
   const {count, rows } = await Book.findAndCountAll(); // gets the total number of books in the db
   const limitNumber = 5; // number of items per page
   
-  const page = Math.floor(count / limitNumber); // creates the pages on the bottom of the screen (number of rows / how many items per page)
+  const page = Math.floor(count / limitNumber) - 1; // creates the pages on the bottom of the screen (number of rows / how many items per page)
   const pageNumber = req.query.page; // Page Number user selected
 
 
@@ -116,7 +116,12 @@ router.post('/books/new', asyncHandler(async (req, res) => {
         console.log(book);        
         res.render("new-book", { book, errors: error.errors, title: "New Book" })
       } else {
-        throw error; // error caught in the asyncHandler's catch block
+          //throw error; // error caught in the asyncHandler's catch block
+          const err = new Error(`Page Does Not Exist`);
+          err.message = `Page Does Not Exist`;
+          err.status = 404
+          next(err)
+     
       } 
   } 
 }));
@@ -130,49 +135,25 @@ router.get("/book-details/:id", asyncHandler(async (req, res,next) => {
   if(book) {
     res.render("book-details", { book, title: book.title });  
   } else {
-      const err = new Error(`Book  Does Not Exist`);
-      err.status = 404
-      next(err)
-    
-    // res.sendStatus(404);
-    // 
+      const err = new Error(`Book # ${req.params.id} Does Not Exist`);
+      err.status = 404;
+      next(err); 
   }
-
-  // let book;
-  // try{
-  //     book = await Book.findByPk(req.params.id);
-  //     if(book) {
-  //       res.render("book-details", { book, title: book.title });  
-  //     } else {
-  //       res.sendStatus(404);
-  //     }
-
-  // } catch(error) {
-  //   if(error.name === "SequelizeValidationError") { // checking the error
-       
-  //     res.render("book-details", { book, errors: error.errors})
-  //   } else {
-  //     throw error; // error caught in the asyncHandler's catch block
-  //   } 
-
-  // }
-
-
-
-
 
 }));
 
 
 //Update/Edit
-router.get("/book-details/edit/:id", asyncHandler(async (req, res) => {
+router.get("/book-details/edit/:id", asyncHandler(async (req, res, next) => {
   const book = await Book.findByPk(req.params.id);
   if(book) {
     res.render("edit", { book, title: book.title });   
 
   } else {
-    res.sendStatus(404);
-  }
+    const err = new Error(`Book # ${req.params.id} Does Not Exist`);
+    err.status = 404;
+    next(err);
+ }
 }));
 
 //Update/Edit book
@@ -209,8 +190,10 @@ router.get("/books/:id/delete", asyncHandler(async (req, res) => {
     res.render("delete", { book, title: book.title });   
 
   } else {
-    res.sendStatus(404);
-  }
+    const err = new Error(`Book # ${req.params.id} Does Not Exist`);
+    err.status = 404;
+    next(err);
+   }
 }));
 
 
@@ -223,7 +206,9 @@ router.post("/books/:id/delete", asyncHandler(async (req, res) => {
         await book.destroy();
         res.redirect("/");
       } else {
-        res.sendStatus(404);
+          const err = new Error(`Book # ${req.params.id} Does Not Exist`);
+          err.status = 404;
+          next(err);
       }
   } catch(error) {
     if(error.name === "SequelizeValidationError") {
@@ -238,21 +223,7 @@ router.post("/books/:id/delete", asyncHandler(async (req, res) => {
 }));
 
 
-//Error Handlers
-// router.use((req, res, next)=>{
-//   const err = new Error('Page Not Found');
-//   err.message = 'Sorry! We couldn\'t find the page you were looking for.';
-//   err.status = 404;
-//   next(err);
-// });
 
-//Error Handlers
-router.use((req, res, next)=>{
-  const err = new Error('Server Error');
-  err.message = 'Sorry! There was an unexpected error on the server.';
-  err.status = 500;
-  next(err);
-});
 
 
 router.use((err, req, res, next) => {
@@ -261,6 +232,7 @@ router.use((err, req, res, next) => {
     res.render('page-not-found', {err});
   }
    else {
+    err.message =  err.message || `Sorry! There was an unexpected error on the server.`
     res.render('error', {err});
   }
 
