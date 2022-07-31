@@ -119,9 +119,29 @@ input[type=text] {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
+  text-align: top;
  
 }
 
 .form__input--flex  input[type=submit] {
   margin: 0;
+}
+
+.page-number {
+  padding:10px;
+  border: #01b189 1px solid;
+  margin:10px;
+  border-radius: 5px;
+
+}
+
+.page-list {
+  margin-top:10px;
+}
+
+.search-box {
+  display: flex;
+  flex-direction:  row;
+  flex-wrap: nowrap;
+  text-align: top;
 }

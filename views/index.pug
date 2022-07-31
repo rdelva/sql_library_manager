@@ -4,13 +4,14 @@ block content
   h1= title
   
   div.header
-    span
+    div
       a.button(href="/books/new") Create New Book
     
-    form(action="/books"  method="post")
-      div.form__input--flex
-        input.search(type="text" id="bookSearch" name="query" )
-        input(type="submit" id="search"  value="Search")
+    div.search-box
+      form(action="/books"  method="post")
+        div.form__input--flex
+          input.search(type="text" id="bookSearch" name="query" )
+          input(type="submit" id="search"  value="Search")
   table
       thead 
           tr
@@ -32,6 +33,6 @@ block content
    // a.button(href="/books" id="next")  Next 5
 
 
-  div
+  div.page-list
     -for (var i = 1; i <= page; i++  )
-     a.page(href="/books?page=" + i ) #{i} 
+     a.page-number(href="/books?page=" + i ) #{i} 
