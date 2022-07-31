@@ -120,6 +120,7 @@ input[type=text] {
   flex-direction: row;
   flex-wrap: nowrap;
   text-align: top;
+  padding-top:0px;
  
 }
 
@@ -139,9 +140,11 @@ input[type=text] {
   margin-top:10px;
 }
 
-.search-box {
-  display: flex;
-  flex-direction:  row;
-  flex-wrap: nowrap;
-  text-align: top;
+
+.button {
+  display: inline-block;
+}
+
+table {
+  margin:20px 0 20px 0;
 }
