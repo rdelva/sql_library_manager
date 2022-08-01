@@ -109,8 +109,14 @@ input[type=text] {
 /* Additional Styles */
 
 .container {
-  width:75%;
+  width:75%;  
 }
+
+.container p {
+  font-size:16px;
+  font-weight:normal
+}
+
 .header {
  display:flex;
  flex-direction: row; 
@@ -152,3 +158,4 @@ table {
   margin:20px 0 20px;;
   width:100%;
 }
+
