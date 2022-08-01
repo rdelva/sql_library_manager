@@ -86,6 +86,23 @@ router.post('/books', asyncHandler(async (req, res) => {
     }// end of where clause
    });
 
+   //Pagination Sections
+  const {count, rows } = await Book.findAndCountAll(); // gets the total number of books in the db
+  const limitNumber = 5; // number of items per page
+  
+  const page = Math.floor(count / limitNumber); // creates the pages on the bottom of the screen (number of rows / how many items per page)
+  const pageNumber = req.query.page; // Page Number user selected
+
+  //Pagination
+  if(pageNumber < limitNumber ) {
+    const books = await Book.findAll({ limit: 5, offset: (pageNumber * limitNumber) });
+    res.render('index', { books, title: "Books", page });
+  } else {
+    const books = await Book.findAll({ limit: 5, offset: limitNumber });
+    res.render('index', { books, title: "Books", page });
+
+  }
+
 
   res.render('index', { books, title: "Books" });
 
