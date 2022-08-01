@@ -21,6 +21,8 @@ function asyncHandler(cb){
   }
 }
 
+
+
 //Test the Book model and communication with the database
 
 // router.get('/', asyncHandler(async (req, res) => {
@@ -40,23 +42,30 @@ router.get('/books', asyncHandler(async (req, res) => {
 
   //http://localhost:3000/books?page=1&limit=5
 
+  
+  
+  //Pagination
   const {count, rows } = await Book.findAndCountAll(); // gets the total number of books in the db
   const limitNumber = 5; // number of items per page
+
+  let index; //index of the array - used for the offset to see up to what range of books you want to see
+  let numberOfPages = Math.ceil(count / limitNumber); // creates the pages on the bottom of the screen (number of rows / how many items per page)
+  let pageSelected = req.query.page; // Is the selected page number
   
-  const page = Math.floor(count / limitNumber); // creates the pages on the bottom of the screen (number of rows / how many items per page)
-  const pageNumber = req.query.page; // Page Number user selected
-
-
-
-
-  //Pagination
-  if(pageNumber < limitNumber ) {
-    const books = await Book.findAll({ limit: 5, offset: (pageNumber * limitNumber) });
-    res.render('index', { books, title: "Books", page });
+  //index starts off with zero unless a page is clicked
+  if(index || pageSelected){
+     index =  pageSelected - 1; // Page Number user selected
   } else {
-    const books = await Book.findAll({ limit: 5, offset: limitNumber });
-    res.render('index', { books, title: "Books", page });
-
+    index = 0;
+  }
+   
+  //Sets up Page Numbers
+  if(numberOfPages < limitNumber ) {
+    const books = await Book.findAll({   limit: 5, offset: (index * limitNumber)});
+    res.render('index', { books, title: "Books", numberOfPages });
+  } else {
+    const books = await Book.findAll({ limit: 5, offset: index });
+    res.render('index', { books, title: "Books", numberOfPages });
   }
   
 
@@ -66,6 +75,12 @@ router.get('/books', asyncHandler(async (req, res) => {
 //Shows the full list of books
 router.post('/books', asyncHandler(async (req, res) => {
   const searchQuery = req.body.query;
+
+  
+  if(!searchQuery) { // if no value is entered redirect to the main list
+    res.redirect('/books');
+  }
+
   const books = await Book.findAll({ 
     where: {
       [Op.or]: 
@@ -86,25 +101,10 @@ router.post('/books', asyncHandler(async (req, res) => {
     }// end of where clause
    });
 
-   //Pagination Sections
-  const {count, rows } = await Book.findAndCountAll(); // gets the total number of books in the db
-  const limitNumber = 5; // number of items per page
   
-  const page = Math.floor(count / limitNumber); // creates the pages on the bottom of the screen (number of rows / how many items per page)
-  const pageNumber = req.query.page; // Page Number user selected
-
-  //Pagination
-  if(pageNumber < limitNumber ) {
-    const books = await Book.findAll({ limit: 5, offset: (pageNumber * limitNumber) });
-    res.render('index', { books, title: "Books", page });
-  } else {
-    const books = await Book.findAll({ limit: 5, offset: limitNumber });
-    res.render('index', { books, title: "Books", page });
-
-  }
 
 
-  res.render('index', { books, title: "Books" });
+  res.render('index', { books, title: "Books",  });
 
 }));
 
@@ -223,9 +223,9 @@ router.post("/books/:id/delete", asyncHandler(async (req, res) => {
         await book.destroy();
         res.redirect("/");
       } else {
-          const err = new Error(`Book # ${req.params.id} Does Not Exist`);
-          err.status = 404;
-          next(err);
+        const err = new Error(`Book # ${req.params.id} Does Not Exist`);
+        err.status = 404;
+        next(err);
       }
   } catch(error) {
     if(error.name === "SequelizeValidationError") {
